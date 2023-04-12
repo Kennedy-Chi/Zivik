@@ -94,10 +94,10 @@ exports.signup = catchAsync(async (req, res, next) => {
   // )}/api/vi/users/resetPassword/?token=${resetToken}`;
 
   // CALL THE EMAIL METHOD AND SEND THE EMAIL
-  const from = `info@asfinanceltd.com`;
+  const from = `info@zivikbank.com/`;
 
   // const domainName = "http://localhost:3000";
-  const domainName = "https://asfinanceltd.com";
+  const domainName = "https://zivikbank.com/";
 
   users.forEach((user) => {
     try {
@@ -194,9 +194,9 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
   await user.save({ validateBeforeSave: false });
 
   const email = await Email.find({ name: "reset-password" });
-  const resetURL = `https://asfinanceltd.com/confirm-password/?token=${resetToken}`;
-  const domainName = "https://asfinanceltd.com";
-  const from = "support@asfinanceltd.com";
+  const resetURL = `https://zivikbank.com/confirm-password/?token=${resetToken}`;
+  const domainName = "https://zivikbank.com/";
+  const from = "info@zivikbank.com/";
 
   const content = email[0]?.content.replace("{{username}}", `${user.username}`);
 
@@ -374,9 +374,9 @@ exports.activateAUser = catchAsync(async (req, res, next) => {
     .replace("{{account-number}}", `${account.accountNumber}`)
     .replace("{{account-type}}", `Savings`)
     .replace("{{currency}}", `${account.currency}`);
-  const domainName = "https://asfinanceltd.com";
+  const domainName = "https://zivikbank.com/";
   const resetURL = "";
-  const from = `support@asfinanceltd.com`;
+  const from = `info@zivikbank.com/`;
 
   try {
     const banner = `${domainName}/uploads/${email[0]?.banner}`;

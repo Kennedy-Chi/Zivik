@@ -35,7 +35,9 @@ exports.getBanner = catchAsync(async (req, res, next) => {
 });
 
 exports.updateBanner = catchAsync(async (req, res, next) => {
-  // req.body.bannerImage = JSON.parse(req.body.bannerImage);
+  if (req.file) {
+    req.body.bannerImage = req.file.filename;
+  }
   await Banner.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
     runValidators: true,

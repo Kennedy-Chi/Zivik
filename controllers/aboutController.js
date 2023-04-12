@@ -4,7 +4,9 @@ const APIFeatures = require("../utils/apiFeatures");
 const catchAsync = require("../utils/catchAsync");
 
 exports.createAbout = catchAsync(async (req, res) => {
-  req.body.certificate = req.file.filename;
+  if (req.file) {
+    req.body.certificate = req.file.filename;
+  }
 
   const about = await About.create(req.body);
 

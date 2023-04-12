@@ -3155,7 +3155,7 @@ textarea.w-select {
 }
 
 .about-conten--2 {
-  background-image: url("https://uploads-ssl.webflow.com/6405430dbac1369b9494f2e3/64077ab1d7e9957219e784ae_3.jpg");
+  background-image: url("../images/more-banking.jpg");
   background-position: 50% 50%;
   background-size: cover;
 }
@@ -3633,7 +3633,7 @@ textarea.w-select {
 .side-brand-background {
   width: 50%;
   height: 100vh;
-  background-image: url("https://uploads-ssl.webflow.com/6405430dbac1369b9494f2e3/6407b2ff98ca0f1aeb2b6fa0_2-1.jpg");
+  background-image: url("../images/smiling.jpg");
   background-position: 50% 50%;
   background-size: cover;
 }
