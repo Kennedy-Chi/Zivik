@@ -66,7 +66,7 @@ exports.signup = catchAsync(async (req, res, next) => {
       return "00" + random_number.toString(); // adds two leading zeros
     };
     const newUser = await User.findByIdAndUpdate(user._id, {
-      suspension: false,
+      suspension: true,
     });
 
     const accountDetails = {
@@ -87,46 +87,43 @@ exports.signup = catchAsync(async (req, res, next) => {
 
   // GET THE EMAIL AND THE USERS TO SEND TO
   const email = await Email.find({ name: "confirm-registration" });
-  const users = [user];
 
   // const resetURL = `${req.protocol}://${req.get(
   //   "host"
   // )}/api/vi/users/resetPassword/?token=${resetToken}`;
 
   // CALL THE EMAIL METHOD AND SEND THE EMAIL
-  const from = `info@zivikbank.com/`;
+  const from = `info@zivikbank.com`;
 
   // const domainName = "http://localhost:3000";
-  const domainName = "https://zivikbank.com/";
+  const domainName = "https://zivikbank.com";
 
-  users.forEach((user) => {
-    try {
-      const resetURL = `${domainName}/confirm-registration?token=${user._id}`;
+  try {
+    const resetURL = `${domainName}/confirm-registration?token=${user._id}`;
 
-      const banner = `${domainName}/uploads/${email[0]?.banner}`;
-      new SendEmail(
-        from,
-        user,
-        email[0]?.name,
-        email[0]?.title,
-        banner,
-        email[0]?.content,
-        email[0]?.headerColor,
-        email[0]?.footerColor,
-        email[0]?.mainColor,
-        email[0]?.greeting,
-        email[0]?.warning,
-        resetURL
-      ).sendEmail();
-    } catch (err) {
-      return next(
-        new AppError(
-          `There was an error sending the email. Try again later!, ${err}`,
-          500
-        )
-      );
-    }
-  });
+    const banner = `${domainName}/uploads/${email[0]?.banner}`;
+    new SendEmail(
+      from,
+      user,
+      email[0]?.name,
+      email[0]?.title,
+      banner,
+      email[0]?.content,
+      email[0]?.headerColor,
+      email[0]?.footerColor,
+      email[0]?.mainColor,
+      email[0]?.greeting,
+      email[0]?.warning,
+      resetURL
+    ).sendEmail();
+  } catch (err) {
+    return next(
+      new AppError(
+        `There was an error sending the email. Try again later!, ${err}`,
+        500
+      )
+    );
+  }
 
   // createSendToken(user, 201, res);
 
@@ -195,8 +192,8 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
 
   const email = await Email.find({ name: "reset-password" });
   const resetURL = `https://zivikbank.com/confirm-password/?token=${resetToken}`;
-  const domainName = "https://zivikbank.com/";
-  const from = "info@zivikbank.com/";
+  const domainName = "https://zivikbank.com";
+  const from = "info@zivikbank.com";
 
   const content = email[0]?.content.replace("{{username}}", `${user.username}`);
 
@@ -374,9 +371,9 @@ exports.activateAUser = catchAsync(async (req, res, next) => {
     .replace("{{account-number}}", `${account.accountNumber}`)
     .replace("{{account-type}}", `Savings`)
     .replace("{{currency}}", `${account.currency}`);
-  const domainName = "https://zivikbank.com/";
+  const domainName = "https://zivikbank.com";
   const resetURL = "";
-  const from = `info@zivikbank.com/`;
+  const from = `info@zivikbank.com`;
 
   try {
     const banner = `${domainName}/uploads/${email[0]?.banner}`;
