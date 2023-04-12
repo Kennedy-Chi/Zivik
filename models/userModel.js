@@ -7,7 +7,6 @@ const userSchema = new mongoose.Schema({
   username: {
     type: String,
     require: [true, "Please fill in your username"],
-    minlength: [2, "Username must be greater than 3 characters"],
     unique: [true, "A user with this username already exist"],
     trim: true,
   },
