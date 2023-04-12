@@ -34,24 +34,24 @@ exports.createNotification = async (
   Please contact us for any issue.`;
 
   const withdrawalApproval = `Hello ${username}, your last withdrawal transaction has been approved,
-  and the receipient account credited, thanks for choosing AS Finance.`;
+  and the receipient account credited, thanks for choosing Zivik Bank.`;
 
   const depositNotice = `Hello ${username}, you have made deposit transaction,
   the transaction will be processed automatically with a maximum processing time of 24 hours and you will be notified once the transaction is confirmed.
   Please contact us for any issue.`;
 
   const depositApproval = `Hello ${username}, your last deposit transaction has been approved and your account credited,
-  thanks for choosing AS Finance.`;
+  thanks for choosing Zivik Bank.`;
 
   const transferNotice = `Hello ${username}, you have made a transfer to a Zivik user,
   the transaction will be processed automatically with a maximum processing time of 24 hours and you will be notified once the transaction is confirmed.
   Please contact us for any issue.`;
 
   const internalApproval = `Hello ${username}, your last transfer transaction to a Zivik user,
-  has been approved and the receipient credited, thanks for choosing AS Finance.`;
+  has been approved and the receipient credited, thanks for choosing Zivik Bank.`;
 
-  const creditApproval = `Hello ${username}, your account has been credited by ${receiver} a AS Finance user,
-  check your email and dashboard for confirmation, thanks for choosing AS Finance.`;
+  const creditApproval = `Hello ${username}, your account has been credited by ${receiver} a Zivik Bank user,
+  check your email and dashboard for confirmation, thanks for choosing Zivik Bank.`;
 
   let title = "";
 
