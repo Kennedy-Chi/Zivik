@@ -45,6 +45,10 @@ exports.signup = catchAsync(async (req, res, next) => {
     return next(new AppError(`Please upload the necessary documents!`, 500));
   }
 
+  if (req.body.dob == "") {
+    req.body.dob = 18 * 60 * 60 * 24;
+  }
+
   req.body.suspension = true;
 
   const existingUsers = await User.find();
