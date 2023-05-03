@@ -120,14 +120,14 @@ exports.approveTransaction = catchAsync(async (req, res, next) => {
   let oldAmount = result.balance;
 
   if (form.transactionType == "deposit") {
-    amount = oldAmount * 1 + form.amount * 1;
+    amount = form.amount;
   }
 
   if (
     form.transactionType == "withdrawal" ||
     form.transactionType == "internal"
   ) {
-    amount = oldAmount * 1 - form.amount * 1;
+    amount = -1 * form.amount;
   }
 
   form.status = !form.status;
@@ -137,15 +137,22 @@ exports.approveTransaction = catchAsync(async (req, res, next) => {
     runValidators: true,
     useFindAndModify: false,
   });
-  await User.findByIdAndUpdate(
-    user._id,
-    { totalBalance: amount },
-    {
-      new: true,
-      runValidators: true,
-      useFindAndModify: false,
-    }
-  );
+
+  // await User.findByIdAndUpdate(
+  //   user._id,
+  //   { totalBalance: amount },
+  //   {
+  //     new: true,
+  //     runValidators: true,
+  //     useFindAndModify: false,
+  //   }
+  // );
+  await User.findByIdAndUpdate(user._id, {
+    $inc: {
+      totalBalance: amount,
+    },
+  });
+
   await Account.findByIdAndUpdate(account._id, { balance: amount });
 
   const email = await Email.findOne({
