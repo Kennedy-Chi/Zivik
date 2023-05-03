@@ -149,7 +149,7 @@ exports.approveTransaction = catchAsync(async (req, res, next) => {
   // );
   await User.findByIdAndUpdate(user._id, {
     $inc: {
-      totalBalance: amount,
+      totalBalance: form.amount,
     },
   });
 
