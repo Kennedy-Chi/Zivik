@@ -150,7 +150,7 @@ exports.approveTransaction = catchAsync(async (req, res, next) => {
 
   await User.findByIdAndUpdate(user._id, {
     $inc: {
-      totalBalance: form.amount,
+      totalBalance: amount,
     },
   });
 
@@ -170,14 +170,14 @@ exports.approveTransaction = catchAsync(async (req, res, next) => {
 
   sendTransactionEmail(user, email.name, form.amount, "", account);
 
-  if (form.transactionType == "internal-transfer") {
+  if (form.transactionType == "internal") {
     receiver = await User.findOne({ username: form.receiverUsername });
     let receiverAccount = await Account.findOne({
       username: form.receiverUsername,
     });
     let receiverBalance = receiverAccount.balance;
 
-    let newBalance = receiverBalance * 1 + form.amount;
+    let newBalance = receiverBalance * 1 + amount;
 
     await Account.findByIdAndUpdate(receiverAccount._id, {
       balance: newBalance,
