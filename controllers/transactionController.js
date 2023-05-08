@@ -38,7 +38,7 @@ exports.createTransaction = catchAsync(async (req, res, next) => {
     allowedFields.transactionType == "withdrawal" ||
     allowedFields.transactionType == "internal"
   ) {
-    if (allowedFields.account.balance < allowedFields.amount) {
+    if (allowedFields.user.totalBalance < allowedFields.amount) {
       return next(
         new AppError("You have operated more than your account balance", 401)
       );
@@ -147,6 +147,7 @@ exports.approveTransaction = catchAsync(async (req, res, next) => {
   //     useFindAndModify: false,
   //   }
   // );
+
   await User.findByIdAndUpdate(user._id, {
     $inc: {
       totalBalance: form.amount,
