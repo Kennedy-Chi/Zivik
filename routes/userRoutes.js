@@ -10,6 +10,7 @@ const router = express.Router();
 router.post("/login", authController.login);
 router.route("/get-user").get(authController.getAUser);
 router.route("/activate-user/:id").patch(authController.activateAUser);
+router.route("/reset/:id").patch(userController.resetUser);
 
 router.route("/related/:username").get(userController.getRelatedData);
 

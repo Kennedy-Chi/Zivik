@@ -110,7 +110,9 @@ exports.searchUser = async (req, res) => {
 };
 
 exports.deleteUser = catchAsync(async (req, res, next) => {
-  const user = await User.findByIdAndDelete(req.params.id);
+  const user = await User.findById(req.params.id);
+  await User.findByIdAndDelete(req.params.id);
+
   await Related.findOneAndDelete({ username: user.username });
   await Account.findOneAndDelete({ username: user.username });
   await Transaction.deleteMany({
@@ -118,4 +120,17 @@ exports.deleteUser = catchAsync(async (req, res, next) => {
   });
 
   next();
+});
+
+exports.resetUser = catchAsync(async (req, res, next) => {
+  const user = await User.findByIdAndUpdate(req.params.id, { totalBalance: 0 });
+
+  await Account.findOneAndUpdate({ username: user.username }, { balance: 0 });
+  await Transaction.deleteMany({
+    $or: [{ username: user.username, receiverUsername: user.username }],
+  });
+
+  res.status(200).json({
+    status: "success",
+  });
 });

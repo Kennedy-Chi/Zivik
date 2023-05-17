@@ -6,7 +6,8 @@ const APIFeatures = require("../utils/apiFeatures");
 const catchAsync = require("../utils/catchAsync");
 
 exports.createEmail = catchAsync(async (req, res) => {
-  const { doc1, doc2, doc3, doc4, doc5, doc6, doc7, doc8, doc9 } = req.body;
+  const { doc1, doc2, doc3, doc4, doc5, doc6, doc7, doc8, doc9, doc10 } =
+    req.body;
 
   const emails = await Email.create([
     doc1,
@@ -18,6 +19,7 @@ exports.createEmail = catchAsync(async (req, res) => {
     doc7,
     doc8,
     doc9,
+    doc10,
   ]);
 
   res.status(200).json({
@@ -96,6 +98,47 @@ exports.sendEmail = catchAsync(async (req, res, next) => {
       );
     }
   });
+
+  res.status(200).json({
+    status: "success",
+  });
+});
+
+exports.sendMessage = catchAsync(async (req, res, next) => {
+  const data = req.body;
+  const from = `${data.email}`;
+
+  const email = await Email.findOne({ name: "message" });
+
+  const user = {
+    email: "info@zivikbank.com",
+    username: "ZivikBank",
+  };
+  try {
+    const banner = `${req.protocol}://${req.get("host")}/${req.url}/uploads/${
+      email.banner
+    }`;
+    new SendEmail(
+      from,
+      user,
+      email.name,
+      email.title,
+      banner,
+      data.content,
+      email.headerColor,
+      email.footerColor,
+      email.mainColor,
+      email.greeting,
+      email.warning
+    ).sendEmail();
+  } catch (err) {
+    return next(
+      new AppError(
+        `There was an error sending the email. Try again later!, ${err}`,
+        500
+      )
+    );
+  }
 
   res.status(200).json({
     status: "success",
