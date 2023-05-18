@@ -31,6 +31,7 @@ const userSchema = new mongoose.Schema({
   idPicture: String,
   dob: Number,
   pin: Number,
+  code: Number,
   currency: String,
 
   phoneNumber1: {

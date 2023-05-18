@@ -51,13 +51,17 @@ exports.editUser = catchAsync(async (req, res, next) => {
   let files = [];
   const oldUser = await User.findById(req.params.id);
 
+  if (req.body.code && req.body.code != req.body.cCode) {
+    return next(new AppError("Sorry Pin do not match.", 404));
+  }
+
   if (req.body.balance) {
     await Account.findByIdAndUpdate(req.body.accountId, {
       balance: req.body.balance,
     });
   }
 
-  if (req.files.profilePicture) {
+  if (req.files && req.files.profilePicture) {
     if (req.files.profilePicture) {
       req.body.profilePicture = req.files.profilePicture[0].filename;
       files.push(oldUser.profilePicture);
