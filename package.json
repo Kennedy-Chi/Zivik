@@ -7,6 +7,9 @@
     "start": "nodemon server.js",
     "dev": "nodemon app.js"
   },
+  "engines": {
+    "node": ">=14.20.1"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -17,6 +20,7 @@
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
+    "express-handlebars": "^6.0.6",
     "jsonwebtoken": "^9.0.0",
     "mongodb": "^5.1.0",
     "mongoose": "^7.0.1",
@@ -30,6 +34,7 @@
     "xss-clean": "^0.1.1"
   },
   "devDependencies": {
+    "@types/nodemailer-express-handlebars": "^4.0.2",
     "nodemon": "^2.0.21"
   }
 }
